@@ -1,64 +1,61 @@
 using UnityEngine;
+using System.Collections;
 
 public class EcosystemTree : MonoBehaviour
 {
-    [Header("Tree Stats")]
-    public int timesEaten = 0;
-    public int maxEats = 5;
-    public float age = 0f;
-    public float lifespan = 220f;
-    
-    [Header("Growth Logic")]
-    public bool isFullyGrown = true;
-    private float growTimer = 0f;
+    private bool isEdible = true;
+    private Collider treeCollider;
 
-    void Start()
+    void Awake()
     {
-        // If spawned small (1/5th size), it must grow before being eaten
-        if (transform.localScale.y < 1f)
-        {
-            isFullyGrown = false;
-        }
+        // Grab the physical collider on the tree so we can turn it on and off
+        treeCollider = GetComponent<Collider>();
     }
 
-    void Update()
-    {
-        // 1. Aging and Death
-        age += Time.deltaTime;
-        if (age >= lifespan)
-        {
-            Destroy(gameObject);
-        }
-
-        // 2. Growth
-        if (!isFullyGrown)
-        {
-            growTimer += Time.deltaTime;
-            // Grows every 25 seconds
-            if (growTimer >= 25f) 
-            {
-                growTimer = 0f;
-                transform.localScale += Vector3.one * 0.2f; // Grow by 1/5th
-                
-                if (transform.localScale.y >= 1f)
-                {
-                    transform.localScale = Vector3.one;
-                    isFullyGrown = true;
-                }
-            }
-        }
-    }
-
-    // Called by the Giraffe when it takes a bite
+    // The Giraffe calls this function when it tries to eat
     public bool Consume()
     {
-        if (!isFullyGrown) return false; // Can't eat baby trees!
+        // If it's just a seed waiting to grow, the giraffe can't eat it!
+        if (!isEdible) return false;
+        
+        Destroy(gameObject);
+        return true;
+    }
 
-        timesEaten++;
-        if (timesEaten >= maxEats)
+    // The Giraffe calls this function right when the tree is spawned
+    public void PlantAsSeed(float delayTime)
+    {
+        StartCoroutine(GrowthRoutine(delayTime));
+    }
+
+    IEnumerator GrowthRoutine(float delayTime)
+    {
+        // 1. Instantly become a tiny, inedible seed
+        isEdible = false;
+        if (treeCollider != null) treeCollider.enabled = false;
+        transform.localScale = Vector3.one * 0.2f; // 1/5th size
+
+        // 2. Wait the requested 70-130 seconds
+        yield return new WaitForSeconds(delayTime);
+
+        // 3. Turn the physics back on so giraffes can see it again
+        if (treeCollider != null) treeCollider.enabled = true;
+        isEdible = true;
+
+        // 4. Smoothly animate the tree growing to full size over 5 seconds!
+        float growTime = 5f;
+        float elapsed = 0f;
+        Vector3 startScale = transform.localScale;
+        Vector3 targetScale = Vector3.one;
+
+        while (elapsed < growTime)
         {
-            Destroy(gameObject);
+            elapsed += Time.deltaTime;
+            transform.localScale = Vector3.Lerp(startScale, targetScale, elapsed / growTime);
+            yield return null;
         }
-        return true; 
+
+        // Ensure it ends up perfectly at normal size
+        transform.localScale = targetScale; 
     }
 }
