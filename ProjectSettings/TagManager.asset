@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Water
   - Wall
+  - Tree
   layers:
   - Default
   - TransparentFX

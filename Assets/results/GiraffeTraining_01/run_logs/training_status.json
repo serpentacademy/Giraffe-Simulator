@@ -1,0 +1,65 @@
+{
+    "GiraffeBrain": {
+        "checkpoints": [
+            {
+                "steps": 1960,
+                "file_path": "results\\GiraffeTraining_01\\GiraffeBrain\\GiraffeBrain-1960.onnx",
+                "reward": -1.0000000447034836,
+                "creation_time": 1779089204.1147635,
+                "auxillary_file_paths": [
+                    "results\\GiraffeTraining_01\\GiraffeBrain\\GiraffeBrain-1960.pt"
+                ]
+            },
+            {
+                "steps": 2920,
+                "file_path": "results\\GiraffeTraining_01\\GiraffeBrain\\GiraffeBrain-2920.onnx",
+                "reward": null,
+                "creation_time": 1779134686.6303704,
+                "auxillary_file_paths": [
+                    "results\\GiraffeTraining_01\\GiraffeBrain\\GiraffeBrain-2920.pt"
+                ]
+            },
+            {
+                "steps": 3920,
+                "file_path": "results\\GiraffeTraining_01\\GiraffeBrain\\GiraffeBrain-3920.onnx",
+                "reward": -1.0000000447034836,
+                "creation_time": 1779135650.872284,
+                "auxillary_file_paths": [
+                    "results\\GiraffeTraining_01\\GiraffeBrain\\GiraffeBrain-3920.pt"
+                ]
+            },
+            {
+                "steps": 5176,
+                "file_path": "results\\GiraffeTraining_01\\GiraffeBrain\\GiraffeBrain-5176.onnx",
+                "reward": -1.0000000447034836,
+                "creation_time": 1779135700.4680743,
+                "auxillary_file_paths": [
+                    "results\\GiraffeTraining_01\\GiraffeBrain\\GiraffeBrain-5176.pt"
+                ]
+            },
+            {
+                "steps": 7177,
+                "file_path": "results\\GiraffeTraining_01\\GiraffeBrain\\GiraffeBrain-7177.onnx",
+                "reward": -1.0000000428408384,
+                "creation_time": 1779138354.287552,
+                "auxillary_file_paths": [
+                    "results\\GiraffeTraining_01\\GiraffeBrain\\GiraffeBrain-7177.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 7177,
+            "file_path": "results\\GiraffeTraining_01\\GiraffeBrain.onnx",
+            "reward": -1.0000000428408384,
+            "creation_time": 1779138354.287552,
+            "auxillary_file_paths": [
+                "results\\GiraffeTraining_01\\GiraffeBrain\\GiraffeBrain-7177.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "1.13.1+cu117"
+    }
+}
