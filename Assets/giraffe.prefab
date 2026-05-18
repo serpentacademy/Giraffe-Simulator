@@ -1,0 +1,232 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &3853095202531237147
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 52b0a0c4c3399f94db827325a68d80a8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 133.38
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 52b0a0c4c3399f94db827325a68d80a8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 23.07
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 52b0a0c4c3399f94db827325a68d80a8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 18.982582
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 52b0a0c4c3399f94db827325a68d80a8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 52b0a0c4c3399f94db827325a68d80a8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 52b0a0c4c3399f94db827325a68d80a8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 52b0a0c4c3399f94db827325a68d80a8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 52b0a0c4c3399f94db827325a68d80a8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 52b0a0c4c3399f94db827325a68d80a8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 52b0a0c4c3399f94db827325a68d80a8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 52b0a0c4c3399f94db827325a68d80a8, type: 3}
+      propertyPath: m_Name
+      value: giraffe
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 52b0a0c4c3399f94db827325a68d80a8, type: 3}
+      propertyPath: m_TagString
+      value: Giraffe
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 52b0a0c4c3399f94db827325a68d80a8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7755639578571147960}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 52b0a0c4c3399f94db827325a68d80a8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5833533236197169126}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 52b0a0c4c3399f94db827325a68d80a8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5708860815790523839}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 52b0a0c4c3399f94db827325a68d80a8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3722518421770204156}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 52b0a0c4c3399f94db827325a68d80a8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2871600131119790819}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 52b0a0c4c3399f94db827325a68d80a8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2546948775138191854}
+  m_SourcePrefab: {fileID: 100100000, guid: 52b0a0c4c3399f94db827325a68d80a8, type: 3}
+--- !u!1 &4159523397596864586 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 52b0a0c4c3399f94db827325a68d80a8, type: 3}
+  m_PrefabInstance: {fileID: 3853095202531237147}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &7755639578571147960
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4159523397596864586}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 90cb8f325352c0e4e9e49cf9361ca9e1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!143 &5833533236197169126
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4159523397596864586}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2
+  m_Radius: 3.94
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5708860815790523839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4159523397596864586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d1c4e0b1822b495aa52bc52839ecb30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.ML-Agents::Unity.MLAgents.Policies.BehaviorParameters
+  m_BrainParameters:
+    VectorObservationSize: 2
+    NumStackedVectorObservations: 1
+    m_ActionSpec:
+      m_NumContinuousActions: 2
+      BranchSizes: 
+    VectorActionSize: 02000000
+    VectorActionDescriptions: []
+    VectorActionSpaceType: 1
+    hasUpgradedBrainParametersWithActionSpec: 1
+  m_Model: {fileID: 0}
+  m_InferenceDevice: 0
+  m_BehaviorType: 0
+  m_BehaviorName: GiraffeBrain
+  TeamId: 0
+  m_UseChildSensors: 1
+  m_UseChildActuators: 1
+  m_DeterministicInference: 0
+  m_ObservableAttributeHandling: 0
+--- !u!114 &3722518421770204156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4159523397596864586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fdf52d2deb1d6841bc88fd1e8a5ce8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GiraffeEcosystemAgent
+  agentParameters:
+    maxStep: 0
+  hasUpgradedFromAgentParameters: 1
+  MaxStep: 5000
+  giraffePrefab: {fileID: 4159523397596864586}
+  treePrefab: {fileID: 0}
+  thirstTimer: 150
+  hungerTimer: 140
+  moveSpeed: 5
+  turnSpeed: 150
+--- !u!114 &2871600131119790819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4159523397596864586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bb6b867a41448888c1cd4f99643ad71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.ML-Agents::Unity.MLAgents.Sensors.RayPerceptionSensorComponent3D
+  m_SensorName: RayPerceptionSensor
+  m_DetectableTags:
+  - Water
+  - Tree
+  - Wall
+  m_RaysPerDirection: 3
+  m_MaxRayDegrees: 70
+  m_SphereCastRadius: 0.5
+  m_RayLength: 20
+  m_RayLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967291
+  m_ObservationStacks: 1
+  m_AlternatingRayOrder: 1
+  m_UseBatchedRaycasts: 0
+  rayHitColor: {r: 1, g: 0, b: 0, a: 1}
+  rayMissColor: {r: 1, g: 1, b: 1, a: 1}
+  m_StartVerticalOffset: 0
+  m_EndVerticalOffset: 0
+--- !u!114 &2546948775138191854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4159523397596864586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a5c9d521e5ef4759a8246a07d52221e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.ML-Agents::Unity.MLAgents.DecisionRequester
+  DecisionPeriod: 5
+  DecisionStep: 0
+  TakeActionsBetweenDecisions: 1

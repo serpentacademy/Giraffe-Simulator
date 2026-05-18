@@ -2,58 +2,58 @@
     "GiraffeBrain": {
         "checkpoints": [
             {
-                "steps": 1960,
-                "file_path": "results\\GiraffeTraining_01\\GiraffeBrain\\GiraffeBrain-1960.onnx",
-                "reward": -1.0000000447034836,
-                "creation_time": 1779089204.1147635,
-                "auxillary_file_paths": [
-                    "results\\GiraffeTraining_01\\GiraffeBrain\\GiraffeBrain-1960.pt"
-                ]
-            },
-            {
-                "steps": 2920,
-                "file_path": "results\\GiraffeTraining_01\\GiraffeBrain\\GiraffeBrain-2920.onnx",
+                "steps": 437854,
+                "file_path": "results\\GiraffeTraining_01\\GiraffeBrain\\GiraffeBrain-437854.onnx",
                 "reward": null,
-                "creation_time": 1779134686.6303704,
+                "creation_time": 1779146351.6243753,
                 "auxillary_file_paths": [
-                    "results\\GiraffeTraining_01\\GiraffeBrain\\GiraffeBrain-2920.pt"
+                    "results\\GiraffeTraining_01\\GiraffeBrain\\GiraffeBrain-437854.pt"
                 ]
             },
             {
-                "steps": 3920,
-                "file_path": "results\\GiraffeTraining_01\\GiraffeBrain\\GiraffeBrain-3920.onnx",
-                "reward": -1.0000000447034836,
-                "creation_time": 1779135650.872284,
+                "steps": 459225,
+                "file_path": "results\\GiraffeTraining_01\\GiraffeBrain\\GiraffeBrain-459225.onnx",
+                "reward": null,
+                "creation_time": 1779146548.3131356,
                 "auxillary_file_paths": [
-                    "results\\GiraffeTraining_01\\GiraffeBrain\\GiraffeBrain-3920.pt"
+                    "results\\GiraffeTraining_01\\GiraffeBrain\\GiraffeBrain-459225.pt"
                 ]
             },
             {
-                "steps": 5176,
-                "file_path": "results\\GiraffeTraining_01\\GiraffeBrain\\GiraffeBrain-5176.onnx",
-                "reward": -1.0000000447034836,
-                "creation_time": 1779135700.4680743,
+                "steps": 499949,
+                "file_path": "results\\GiraffeTraining_01\\GiraffeBrain\\GiraffeBrain-499949.onnx",
+                "reward": null,
+                "creation_time": 1779146820.589817,
                 "auxillary_file_paths": [
-                    "results\\GiraffeTraining_01\\GiraffeBrain\\GiraffeBrain-5176.pt"
+                    "results\\GiraffeTraining_01\\GiraffeBrain\\GiraffeBrain-499949.pt"
                 ]
             },
             {
-                "steps": 7177,
-                "file_path": "results\\GiraffeTraining_01\\GiraffeBrain\\GiraffeBrain-7177.onnx",
-                "reward": -1.0000000428408384,
-                "creation_time": 1779138354.287552,
+                "steps": 540688,
+                "file_path": "results\\GiraffeTraining_01\\GiraffeBrain\\GiraffeBrain-540688.onnx",
+                "reward": null,
+                "creation_time": 1779146916.084676,
                 "auxillary_file_paths": [
-                    "results\\GiraffeTraining_01\\GiraffeBrain\\GiraffeBrain-7177.pt"
+                    "results\\GiraffeTraining_01\\GiraffeBrain\\GiraffeBrain-540688.pt"
+                ]
+            },
+            {
+                "steps": 630640,
+                "file_path": "results\\GiraffeTraining_01\\GiraffeBrain\\GiraffeBrain-630640.onnx",
+                "reward": -0.0591997392475605,
+                "creation_time": 1779147273.8996253,
+                "auxillary_file_paths": [
+                    "results\\GiraffeTraining_01\\GiraffeBrain\\GiraffeBrain-630640.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 7177,
+            "steps": 630640,
             "file_path": "results\\GiraffeTraining_01\\GiraffeBrain.onnx",
-            "reward": -1.0000000428408384,
-            "creation_time": 1779138354.287552,
+            "reward": -0.0591997392475605,
+            "creation_time": 1779147273.8996253,
             "auxillary_file_paths": [
-                "results\\GiraffeTraining_01\\GiraffeBrain\\GiraffeBrain-7177.pt"
+                "results\\GiraffeTraining_01\\GiraffeBrain\\GiraffeBrain-630640.pt"
             ]
         }
     },

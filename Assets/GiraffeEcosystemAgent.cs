@@ -9,6 +9,9 @@ public class GiraffeEcosystemAgent : Agent
     [Header("Prefabs")]
     public GameObject giraffePrefab;
     public GameObject treePrefab;
+    
+    [Header("Position Correction")]
+    public float heightOffset = 2.5f; // Adjust this in the Inspector!
 
     [Header("Survival Stats")]
     public float thirstTimer = 120f;
@@ -43,9 +46,8 @@ public class GiraffeEcosystemAgent : Agent
     }
 
     // ---------------- AI MOVEMENT ---------------- //
-// ---------------- AI MOVEMENT ---------------- //
     
-    // NEW: We give the AI awareness of its own internal body timers!
+    // We give the AI awareness of its own internal body timers!
     public override void CollectObservations(VectorSensor sensor)
     {
         // We divide by the max timers to keep the numbers between 0.0 and 1.0 (Neural Networks love this)
@@ -66,6 +68,18 @@ public class GiraffeEcosystemAgent : Agent
             animator.SetFloat("Speed", Mathf.Abs(moveAmount) > 0.1f ? 1f : 0f);
         }
 
+        // MAGIC TRICK: Keep the AI glued to the floor with our custom offset!
+        if (Terrain.activeTerrain != null)
+        {
+            float terrainHeight = Terrain.activeTerrain.SampleHeight(transform.position);
+            Vector3 fixedPos = transform.position;
+            
+            // Set the Y position to the terrain height PLUS our custom lift offset
+            fixedPos.y = terrainHeight + Terrain.activeTerrain.transform.position.y + heightOffset;
+            
+            transform.position = fixedPos;
+        }
+
         // FIXED: We check to make sure MaxStep isn't 0 before doing the math!
         if (MaxStep > 0)
         {
@@ -78,21 +92,26 @@ public class GiraffeEcosystemAgent : Agent
         }
     }
 
-    // Allows you to test manually with WASD before training the AI
+    // Allows you to test safely without crashing the new Unity Input System
     public override void Heuristic(in ActionBuffers actionsOut)
     {
         var continuousActionsOut = actionsOut.ContinuousActions;
-        continuousActionsOut[0] = Input.GetAxis("Vertical");
-        continuousActionsOut[1] = Input.GetAxis("Horizontal");
+        
+        // By setting these to 0, we prevent Unity from looking for a keyboard layout it doesn't understand
+        continuousActionsOut[0] = 0f; 
+        continuousActionsOut[1] = 0f; 
     }
 
-    // ---------------- ECOSYSTEM INTERACTIONS ---------------- //
+  // ---------------- ECOSYSTEM INTERACTIONS ---------------- //
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Water"))
         {
             thirstTimer = 120f;
-            AddReward(1f); // Good job, AI!
+            AddReward(1f); 
+            
+            // NEW: Tell the Global Manager we drank!
+            if (EcosystemCounter.Instance != null) EcosystemCounter.Instance.RegisterDrink();
         }
         else if (other.CompareTag("Tree"))
         {
@@ -101,18 +120,18 @@ public class GiraffeEcosystemAgent : Agent
             {
                 hungerTimer = 100f;
                 eatCount++;
-                AddReward(1f); // Good job, AI!
+                AddReward(1f); 
 
-                // Reproduction check
+                // NEW: Tell the Global Manager we ate!
+                if (EcosystemCounter.Instance != null) EcosystemCounter.Instance.RegisterEat();
+
                 if (eatCount >= 5)
                 {
                     eatCount = 0;
-                    // Spawn new giraffe 2 meters to the right
                     Instantiate(giraffePrefab, transform.position + transform.right * 2f, Quaternion.identity);
-                    AddReward(2f); // Massive reward for reproducing!
+                    AddReward(2f); 
                 }
 
-                // Seed dropping check (33% chance)
                 if (Random.Range(0, 3) == 0)
                 {
                     StartCoroutine(PoopSeedRoutine());
