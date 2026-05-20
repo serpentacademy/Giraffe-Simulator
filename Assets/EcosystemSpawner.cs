@@ -13,7 +13,8 @@ public class EcosystemSpawner : MonoBehaviour
     [Header("Avoidance Tags")]
     [Tooltip("The script will not spawn trees on objects with these tags.")]
     public string waterTag = "Water";
-    public string wallTag = "Wall"; // NEW: Variable to identify your Map Boundaries
+    public string wallTag = "Wall"; 
+    public string treeTag = "Tree"; // NEW: Variable to identify other trees!
 
     void Start()
     {
@@ -52,7 +53,7 @@ public class EcosystemSpawner : MonoBehaviour
                 float heightY = Terrain.activeTerrain.SampleHeight(new Vector3(randomX, 0, randomZ)) + tPos.y;
                 Vector3 spawnPosition = new Vector3(randomX, heightY, randomZ);
 
-                // 3. Check if this spot is safe (not inside the lake AND not inside the walls)
+                // 3. Check if this spot is safe 
                 if (IsPositionSafe(spawnPosition))
                 {
                     // 4. Safe! Spawn the tree
@@ -79,8 +80,8 @@ public class EcosystemSpawner : MonoBehaviour
         
         foreach (Collider col in colliders)
         {
-            // NEW: Now it checks for BOTH the Water tag and the Wall tag!
-            if (col.CompareTag(waterTag) || col.CompareTag(wallTag))
+            // NEW: Now it checks for Water, Walls, AND other Trees!
+            if (col.CompareTag(waterTag) || col.CompareTag(wallTag) || col.CompareTag(treeTag))
             {
                 // We hit a restricted area! This spot is NOT safe.
                 return false; 

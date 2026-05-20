@@ -2,7 +2,6 @@ using UnityEngine;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
-using System.Collections;
 
 public class GiraffeEcosystemAgent : Agent
 {
@@ -11,12 +10,22 @@ public class GiraffeEcosystemAgent : Agent
     public GameObject treePrefab;
     
     [Header("Position Correction")]
-    public float heightOffset = 2.5f; // Adjust this in the Inspector!
+    public float heightOffset = 2.5f; 
 
     [Header("Survival Stats")]
-    public float thirstTimer = 120f;
-    public float hungerTimer = 100f;
-    private int eatCount = 0;
+    public float thirstTimer = 400f;
+    public float hungerTimer = 500f;
+    
+    // Changing this to PUBLIC so you can watch it count up in the Inspector!
+    public int eatCount = 0; 
+    
+    [Header("Reproduction")]
+    public float pregnancyLength = 20f;
+    private int babiesPending = 0;
+    private float pregnancyTimer = 0f;
+
+    [Header("Aging")]
+    public float ageTimer; 
 
     [Header("Movement")]
     public float moveSpeed = 5f;
@@ -27,32 +36,54 @@ public class GiraffeEcosystemAgent : Agent
     public override void Initialize()
     {
         animator = GetComponent<Animator>();
+        ageTimer = Random.Range(1000f, 2000f);
     }
 
     void Update()
     {
-        // Thirst and Hunger drain every second
+        // Thirst, Hunger, and Age drain every second
         thirstTimer -= Time.deltaTime;
         hungerTimer -= Time.deltaTime;
+        ageTimer -= Time.deltaTime;
 
-        if (thirstTimer <= 0f || hungerTimer <= 0f)
+        // --- THE BULLETPROOF PREGNANCY TIMER ---
+        if (babiesPending > 0)
         {
-            // Neural Network Punishment for dying
+            pregnancyTimer -= Time.deltaTime;
+            if (pregnancyTimer <= 0f)
+            {
+                // 1. Give birth!
+                Instantiate(giraffePrefab, transform.position + transform.right * 2f, Quaternion.identity);
+                AddReward(2f); 
+                
+                // 2. Remove one baby from the queue
+                babiesPending--;
+                
+                // 3. If there are MORE babies queued up, reset the timer!
+                if (babiesPending > 0) pregnancyTimer = pregnancyLength;
+            }
+        }
+
+        // 1. Did they successfully survive a full life?
+        if (ageTimer <= 0f)
+        {
+            AddReward(5f); 
+            Destroy(gameObject);
+        }
+        // 2. Did they die of starvation or dehydration?
+        else if (thirstTimer <= 0f || hungerTimer <= 0f)
+        {
             AddReward(-2f); 
-            
-            // The Giraffe dies and is removed from the ecosystem
             Destroy(gameObject); 
         }
     }
 
     // ---------------- AI MOVEMENT ---------------- //
     
-    // We give the AI awareness of its own internal body timers!
     public override void CollectObservations(VectorSensor sensor)
     {
-        // We divide by the max timers to keep the numbers between 0.0 and 1.0 (Neural Networks love this)
-        sensor.AddObservation(thirstTimer / 120f); 
-        sensor.AddObservation(hungerTimer / 100f); 
+        sensor.AddObservation(thirstTimer / 400f); 
+        sensor.AddObservation(hungerTimer / 500f); 
     }
 
     public override void OnActionReceived(ActionBuffers actions)
@@ -63,97 +94,120 @@ public class GiraffeEcosystemAgent : Agent
         transform.Translate(Vector3.forward * moveAmount * moveSpeed * Time.deltaTime);
         transform.Rotate(Vector3.up * turnAmount * turnSpeed * Time.deltaTime);
 
-        // Update Animation
         if (animator != null) {
             animator.SetFloat("Speed", Mathf.Abs(moveAmount) > 0.1f ? 1f : 0f);
         }
 
-        // MAGIC TRICK: Keep the AI glued to the floor with our custom offset!
         if (Terrain.activeTerrain != null)
         {
             float terrainHeight = Terrain.activeTerrain.SampleHeight(transform.position);
             Vector3 fixedPos = transform.position;
-            
-            // Set the Y position to the terrain height PLUS our custom lift offset
             fixedPos.y = terrainHeight + Terrain.activeTerrain.transform.position.y + heightOffset;
-            
             transform.position = fixedPos;
         }
 
-        // FIXED: We check to make sure MaxStep isn't 0 before doing the math!
         if (MaxStep > 0)
         {
             AddReward(-1f / MaxStep);
         }
         else
         {
-            // If MaxStep is 0, just apply a tiny generic penalty
             AddReward(-0.0005f); 
         }
     }
 
-    // Allows you to test safely without crashing the new Unity Input System
     public override void Heuristic(in ActionBuffers actionsOut)
     {
         var continuousActionsOut = actionsOut.ContinuousActions;
-        
-        // By setting these to 0, we prevent Unity from looking for a keyboard layout it doesn't understand
         continuousActionsOut[0] = 0f; 
         continuousActionsOut[1] = 0f; 
     }
 
-  // ---------------- ECOSYSTEM INTERACTIONS ---------------- //
-    void OnTriggerEnter(Collider other)
+    // ---------------- ECOSYSTEM INTERACTIONS ---------------- //
+    
+    void OnTriggerStay(Collider other)
     {
+        // --- NEW: THE DROWNING ZONE ---
+        if (other.CompareTag("DeepWater"))
+        {
+            AddReward(-2f); // Massive penalty for walking into the deep end!
+            Destroy(gameObject); // The giraffe drowns and is removed from the simulation
+            return; // Stop running the rest of the code
+        }
         if (other.CompareTag("Water"))
         {
-            thirstTimer = 120f;
-            AddReward(1f); 
-            
-            // NEW: Tell the Global Manager we drank!
-            if (EcosystemCounter.Instance != null) EcosystemCounter.Instance.RegisterDrink();
+            if (thirstTimer <= (400f - 50f)) 
+            {
+                thirstTimer = 400f;
+                AddReward(1f); 
+                if (EcosystemCounter.Instance != null) EcosystemCounter.Instance.RegisterDrink();
+            }
         }
         else if (other.CompareTag("Tree"))
         {
-            EcosystemTree tree = other.GetComponent<EcosystemTree>();
-            if (tree != null && tree.Consume())
+            if (hungerTimer <= (500f - 50f))
             {
-                hungerTimer = 100f;
-                eatCount++;
-                AddReward(1f); 
-
-                // NEW: Tell the Global Manager we ate!
-                if (EcosystemCounter.Instance != null) EcosystemCounter.Instance.RegisterEat();
-
-                if (eatCount >= 5)
+                EcosystemTree tree = other.GetComponent<EcosystemTree>();
+                
+                if (tree != null && tree.Consume())
                 {
-                    eatCount = 0;
-                    Instantiate(giraffePrefab, transform.position + transform.right * 2f, Quaternion.identity);
-                    AddReward(2f); 
-                }
+                    hungerTimer = 500f;
+                    eatCount++;
+                    AddReward(1f); 
 
-                if (Random.Range(0, 3) == 0)
-                {
-                    StartCoroutine(PoopSeedRoutine());
+                    if (EcosystemCounter.Instance != null) EcosystemCounter.Instance.RegisterEat();
+
+                    // --- THE REPRODUCTION QUEUE ---
+                    if (eatCount >= 5)
+                    {
+                        eatCount = 0; // Reset counter for the next baby
+                        babiesPending++; // Add a baby to the queue!
+                        
+                        // If this is the first baby in the queue, start the 20s timer
+                        if (babiesPending == 1) pregnancyTimer = pregnancyLength; 
+                    }
+
+                    // --- NEW: SAFE SEED DROPPING ---
+                    // 1/3 Chance to try and plant a new tree
+                    if (Random.Range(0, 3) == 0)
+                    {
+                        // Calculate a spot slightly behind the giraffe
+                        Vector3 seedDropPos = transform.position - (transform.forward * 2f);
+                        
+                        // Snap the seed to the actual terrain height so it doesn't float
+                        if (Terrain.activeTerrain != null)
+                        {
+                            float heightY = Terrain.activeTerrain.SampleHeight(seedDropPos) + Terrain.activeTerrain.transform.position.y;
+                            seedDropPos.y = heightY;
+                        }
+
+                        // Check the area using an invisible 2-meter sphere
+                        bool isSpotSafe = true;
+                        Collider[] colliders = Physics.OverlapSphere(seedDropPos, 2f);
+                        
+                        foreach (Collider col in colliders)
+                        {
+                            // If we detect another Tree, Water, or a Wall, abort the spawn!
+                            if (col.CompareTag("Tree") || col.CompareTag("Water") || col.CompareTag("Wall"))
+                            {
+                                isSpotSafe = false;
+                                break; 
+                            }
+                        }
+
+                        // If the coast is clear, plant the seed!
+                        if (isSpotSafe)
+                        {
+                            GameObject newTree = Instantiate(treePrefab, seedDropPos, Quaternion.identity);
+                            EcosystemTree newTreeScript = newTree.GetComponent<EcosystemTree>();
+                            if (newTreeScript != null)
+                            {
+                                newTreeScript.PlantAsSeed(Random.Range(70f, 130f));
+                            }
+                        }
+                    }
                 }
             }
         }
-    }
-
-    IEnumerator PoopSeedRoutine()
-    {
-        // Wait 40-60 seconds to poop
-        float delay = Random.Range(40f, 60f);
-        yield return new WaitForSeconds(delay);
-
-        // Save the location where the poop dropped
-        Vector3 poopPos = transform.position; 
-        
-        // Wait 20 seconds for the seed to take root
-        yield return new WaitForSeconds(20f);
-
-        // A new tree is born!
-        GameObject newTree = Instantiate(treePrefab, poopPos, Quaternion.identity);
-        newTree.transform.localScale = Vector3.one * 0.2f; // 1/5th size
     }
 }

@@ -6,10 +6,35 @@ public class EcosystemTree : MonoBehaviour
     private bool isEdible = true;
     private Collider treeCollider;
 
+    [Header("Lifecycle")]
+    private float lifeTimer;
+    
+    [Header("Health")]
+    private int maxBites = 5;
+    private int currentBites = 0;
+
     void Awake()
     {
         // Grab the physical collider on the tree so we can turn it on and off
         treeCollider = GetComponent<Collider>();
+        
+        // Assign a random lifespan between 3,000 and 7,000 seconds the moment it exists
+        lifeTimer = Random.Range(3000f, 7000f);
+    }
+
+    void Update()
+    {
+        // Only age the tree if it is a fully grown, interactive plant
+        if (isEdible)
+        {
+            lifeTimer -= Time.deltaTime;
+            
+            // If the tree reaches the end of its life, it naturally dies
+            if (lifeTimer <= 0f)
+            {
+                Destroy(gameObject);
+            }
+        }
     }
 
     // The Giraffe calls this function when it tries to eat
@@ -18,7 +43,18 @@ public class EcosystemTree : MonoBehaviour
         // If it's just a seed waiting to grow, the giraffe can't eat it!
         if (!isEdible) return false;
         
-        Destroy(gameObject);
+        // Register the bite
+        currentBites++;
+
+        // Visual Feedback: Shrink the tree a tiny bit so you know it's being eaten!
+        transform.localScale *= 0.9f; 
+
+        // If it has been eaten 5 times, it is destroyed
+        if (currentBites >= maxBites)
+        {
+            Destroy(gameObject);
+        }
+
         return true;
     }
 
@@ -42,8 +78,8 @@ public class EcosystemTree : MonoBehaviour
         if (treeCollider != null) treeCollider.enabled = true;
         isEdible = true;
 
-        // 4. Smoothly animate the tree growing to full size over 5 seconds!
-        float growTime = 5f;
+        // 4. Smoothly animate the tree growing to full size over 300 seconds!
+        float growTime = 300f;
         float elapsed = 0f;
         Vector3 startScale = transform.localScale;
         Vector3 targetScale = Vector3.one;
